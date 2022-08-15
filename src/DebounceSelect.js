@@ -19,7 +19,7 @@ function DebounceSelect({
   const [fetching, setFetching] = useState(false);
   const [options, setOptions] = useState([]);
   const fetchRef = useRef(3);
-  const [list, setList] = useState();
+  const [list, setList] = useState([]);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -27,12 +27,12 @@ function DebounceSelect({
       .then((data) => {
         // setField(data);
         data.map((curr)=>{
-          setList([...data,{label:curr.name, value:curr.id}])
+          setList([{label:curr.name, value:curr.name}])
         })
       });
   }, []);
 
-  console.log("list", list);
+  console.log("listDebounce", list);
   //   console.log("defaultValue", defaultValue);
   //   console.log("field", field);
 
@@ -58,7 +58,7 @@ function DebounceSelect({
 
   return (
     <Select
-      defaultValue={{label:"kl"}}
+      // defaultValue={list}
       //   labelInValue
       // filterOption={false}
       // filterOption={(name, option) =>
@@ -71,7 +71,7 @@ function DebounceSelect({
       notFoundContent={fetching ? <Spin size="small" /> : null}
       {...props}
       options={options}
-      // value={list[1]}
+      value={list[0]}
       onChange={(value) => setList(value)}
     />
   );
